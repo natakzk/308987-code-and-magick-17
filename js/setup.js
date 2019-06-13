@@ -1,15 +1,94 @@
 'use strict';
 
+var fragment = document.createDocumentFragment();
+var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
 var setup = document.querySelector('.setup');
-var setup_similar = document.querySelector('.setup-similar');
+var setupSimilar = setup.querySelector('.setup-similar');
+var setupSimilarList = setup.querySelector('.setup-similar-list');
+var WIZARD_DATA = {
+  name: {
+    firstNames: [
+      'Иван',
+      'Хуан Себастьян',
+      'Мария', 'Кристоф',
+      'Виктор',
+      'Юлия',
+      'Люпита',
+      'Вашингтон'
+    ],
+    lastNames: [
+      'да Марья',
+      'Верон',
+      'Мирабелла',
+      'Вальц',
+      'Онопко',
+      'Топольницкая',
+      'Нионго',
+      'Ирвинг'
+    ],
+  coatColor: [
+    'rgb(101, 137, 164)',
+    'rgb(241, 43, 107)',
+    'rgb(146, 100, 161)',
+    'rgb(56, 159, 117)',
+    'rgb(215, 210, 55)',
+    'rgb(0, 0, 0)'
+    ],
+  eyesColor: [
+    'black',
+    'red',
+    'blue',
+    'yellow',
+    'green'
+    ]
+  }
+};
+var wizardArr = [];
+var numberOfWizards = 4;
 
-// функция показа скрытого элемента
+// показ скрытого элемента
 var showElemenet = function(el) {
   return el.classList.remove('hidden');
 };
 
+// показ попапа
 showElemenet(setup);
-showElemenet(setup_similar);
+
+// выбор случайного элемента из массива
+var getRandomEl = function(array) {
+  return array[Math.floor(Math.random() * array.length)];
+}
+
+// генерирование и отрисовка магов
+var renderWizards = function() {
+  // генерирование мага на основе случайных данных
+  var generateWizard = function() {
+    var wizard = {
+      name: getRandomEl(WIZARD_DATA.name.firstNames) + ' ' + getRandomEl(WIZARD_DATA.name.lastNames),
+      coatColor: getRandomEl(WIZARD_DATA.name.coatColor),
+      eyesColor: getRandomEl(WIZARD_DATA.name.eyesColor)
+    };
+    return wizard;
+  };
+
+  // создание массива из 4 рандомных магов и вставка их в шаблон
+  for (var i = 0; i < numberOfWizards; i++) {
+    wizardArr[i] = generateWizard();
+    var wizardElement = similarWizardTemplate.cloneNode(true);
+    wizardElement.querySelector('.setup-similar-label').textContent = wizardArr[i].name;
+    wizardElement.querySelector('.wizard-coat').style.fill = wizardArr[i].coatColor;
+    wizardElement.querySelector('.wizard-eyes').style.fill = wizardArr[i].eyesColor;
+    setupSimilarList.appendChild(wizardElement);
+  }
+
+  return setupSimilarList;
+}
+
+renderWizards();
+
+
+// показ похожих магов
+showElemenet(setupSimilar);
 
 
 
@@ -33,14 +112,11 @@ showElemenet(setup_similar);
 
 
 
-var FIRST_NAMES = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
-var LAST_NAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
-var COAT_COLORS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
-var EYES_COLORS = ['black', 'red', 'blue', 'blue', 'yellow', 'green'];
 
-var wizard = {
-  'name': 'Пендальф',
-  'age': 4,
-  'female': false
-};
+
+// var wizard = {
+//   'name': 'Пендальф',
+//   'age': 4,
+//   'female': false
+// };
 
