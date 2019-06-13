@@ -71,15 +71,21 @@ var renderWizards = function() {
     return wizard;
   };
 
-  // создание массива из 4 рандомных магов и вставка их в шаблон
-  for (var i = 0; i < numberOfWizards; i++) {
-    wizardArr[i] = generateWizard();
+  var renderWizardEl = function(arr) {
     var wizardElement = similarWizardTemplate.cloneNode(true);
     wizardElement.querySelector('.setup-similar-label').textContent = wizardArr[i].name;
     wizardElement.querySelector('.wizard-coat').style.fill = wizardArr[i].coatColor;
     wizardElement.querySelector('.wizard-eyes').style.fill = wizardArr[i].eyesColor;
-    setupSimilarList.appendChild(wizardElement);
+    return wizardElement;
   }
+
+  // создание массива из 4 рандомных магов и вставка их в шаблон
+  var fragment = document.createDocumentFragment();
+  for (var i = 0; i < numberOfWizards; i++) {
+    wizardArr[i] = generateWizard();
+    fragment.appendChild(renderWizardEl(wizardArr[i]));
+  }
+  setupSimilarList.appendChild(fragment);
 
   return setupSimilarList;
 }
