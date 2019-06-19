@@ -37,20 +37,20 @@ var showElement = function (el) {
 };
 
 // функция закрытия попапа по нажатию на esc
-var onPopupEscPress = function(evt) {
+var onPopupEscPress = function (evt) {
   if (evt.keyCode === ESC_KEYCODE) {
     closePopup();
   }
 };
 
 // функция открытия попапа
-var openPopup = function() {
+var openPopup = function () {
   setup.classList.remove('hidden');
   document.addEventListener('keydown', onPopupEscPress);
 };
 
 // функция закрытия попапа
-var closePopup = function(evt) {
+var closePopup = function () {
   setup.classList.add('hidden');
   document.removeEventListener('keydown', onPopupEscPress);
   wizardCoat.removeEventListener('click', changeCoatColor);
@@ -59,31 +59,31 @@ var closePopup = function(evt) {
 };
 
 // открытие попапа
-setupOpen.addEventListener('click', function() {
+setupOpen.addEventListener('click', function () {
   openPopup();
 });
 
 // открытие попапа при фокусировке на аватаре и по нажатию на enter
-setupOpen.addEventListener('keydown', function(evt) {
+setupOpen.addEventListener('keydown', function (evt) {
   if (evt.keyCode === ENTER_KEYCODE) {
     openPopup();
   }
 });
 
 // закрытие попапа по нажатию на крестик
-setupClose.addEventListener('click', function() {
+setupClose.addEventListener('click', function () {
   closePopup();
 });
 
 // закрытие попапа по нажатию на enter при фокусе на крестике
-setupClose.addEventListener('keydown', function(evt) {
+setupClose.addEventListener('keydown', function (evt) {
   if (evt.keyCode === ENTER_KEYCODE) {
     closePopup();
   }
 });
 
 // валидация поля ввода имени волшебника
-userNameInput.addEventListener('invalid', function (evt) {
+userNameInput.addEventListener('invalid', function () {
   if (userNameInput.validity.tooShort) {
     userNameInput.setCustomValidity('Имя должно состоять минимум из 2-х символов');
   } else if (userNameInput.validity.tooLong) {
@@ -128,12 +128,6 @@ wizardEyes.addEventListener('click', changeEyesColor);
 
 // изменение цвета глаз по клику
 fireballWrap.addEventListener('click', changeFireballColor);
-
-// выбор случайного элемента из массива
-var getRandomEl = function (array) {
-  return array[Math.floor(Math.random() * array.length)];
-};
-
 
 // генерирование мага на основе случайных данных
 var generateWizard = function () {
