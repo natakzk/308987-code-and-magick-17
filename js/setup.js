@@ -10,6 +10,7 @@ var userNameInput = setup.querySelector('.setup-user-name');
 var wizardCoat = setup.querySelector('.wizard-coat');
 var wizardEyes = setup.querySelector('.wizard-eyes');
 var fireballWrap = setup.querySelector('.setup-fireball-wrap');
+var dialogHandle = setup.querySelector('.upload');
 
 var ESC_KEYCODE = 27;
 var ENTER_KEYCODE = 13;
@@ -164,4 +165,3 @@ renderWizards();
 
 // показ похожих магов
 showElement(setupSimilar);
-
