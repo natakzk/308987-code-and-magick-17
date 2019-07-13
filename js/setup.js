@@ -9,14 +9,7 @@
   var wizardCoat = setup.querySelector('.wizard-coat');
   var wizardEyes = setup.querySelector('.wizard-eyes');
   var fireballWrap = setup.querySelector('.setup-fireball-wrap');
-  var WIZARD_DATA = {
-    name: {
-      firstNames: ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'],
-      lastNames: ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг']
-    },
-    coatColor: ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'],
-    eyesColor: ['black', 'red', 'blue', 'yellow', 'green']
-  };
+
   var FIREBALL_COLORS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
   var wizardArr = [];
   var numberOfWizards = 4;
@@ -74,36 +67,25 @@
   // изменение цвета глаз по клику
   fireballWrap.addEventListener('click', changeFireballColor);
 
-  // генерирование мага на основе случайных данных
-  var generateWizard = function () {
-    var wizard = {
-      name: getRandomEl(WIZARD_DATA.name.firstNames) + ' ' + getRandomEl(WIZARD_DATA.name.lastNames),
-      coatColor: getRandomEl(WIZARD_DATA.coatColor),
-      eyesColor: getRandomEl(WIZARD_DATA.eyesColor)
-    };
-    return wizard;
-  };
-
   // генерирование и отрисовка магов
-  var renderWizards = function () {
-    var renderWizardEl = function () {
-      var wizardElement = similarWizardTemplate.cloneNode(true);
-      wizardElement.querySelector('.setup-similar-label').textContent = wizardArr[i].name;
-      wizardElement.querySelector('.wizard-coat').style.fill = wizardArr[i].coatColor;
-      wizardElement.querySelector('.wizard-eyes').style.fill = wizardArr[i].eyesColor;
-      return wizardElement;
-    };
-
-    // создание массива из 4 рандомных магов и вставка их в шаблон
-    var fragment = document.createDocumentFragment();
-    for (var i = 0; i < numberOfWizards; i++) {
-      wizardArr[i] = generateWizard();
-      fragment.appendChild(renderWizardEl(wizardArr[i]));
-    }
-    setupSimilarList.appendChild(fragment);
-
-    return setupSimilarList;
+  var renderWizard = function (wizard) {
+    var wizardElement = similarWizardTemplate.cloneNode(true);
+    wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
+    wizardElement.querySelector('.wizard-coat').style.fill = wizard.colorCoat;
+    wizardElement.querySelector('.wizard-eyes').style.fill = wizard.colorEyes;
+    return wizardElement;
   };
 
-  renderWizards();
+  window.backend.load(function (wizards) {
+    var similarListElement = setup.querySelector('.setup-similar-list');
+    var fragment = document.createDocumentFragment();
+
+    for (var i = 0; i < 4; i++) {
+      fragment.appendChild(renderWizard(wizards[i]));
+    }
+    similarListElement.appendChild(fragment);
+
+    setup.querySelector('.setup-similar').classList.remove('hidden');
+  });
+
 })();
